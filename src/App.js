@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { useState, useEffect } from 'react'
+import './App.css'
+import BookingPage from './pages/BookingPage'
+import Home from './pages/Home'
+import { Route, Routes } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import Navbar from './components/Navbar'
+
+
 
 function App() {
+  
+  const navigate = useNavigate()
+  const [Flight, setFlight] = useState(null)
+
+  useEffect(() => {
+    console.log(Flight);
+  }, [Flight]);
+  
+   function handleSelectedFlight(flight) {
+     setFlight(flight);
+    navigate('/booking')
+   
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    <Navbar/>
+    <Routes>
+    <Route path="/" element={<Home handleSelectedFlight={handleSelectedFlight}/>} />
+    <Route path="/booking" element={<BookingPage flight={Flight} />} />
+    
+    </Routes>
+     
+     
+    </>
+  )
 }
 
-export default App;
+export default App
+
